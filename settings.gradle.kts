@@ -1,4 +1,4 @@
-rootProject.name = "aoc-template"
+rootProject.name = "AoC2021"
 include(
   "shared"
          )
