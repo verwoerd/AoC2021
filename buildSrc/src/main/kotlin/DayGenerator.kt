@@ -34,7 +34,6 @@ object DayGenerator {
     Files.createDirectories(resourcesMain)
     Files.createDirectories(resourcesTest)
     Files.copy(template.resolve("src/main/kotlin/main.kt"), kotlinMain.resolve("main.kt"))
-    Files.copy(template.resolve("src/main/resources/input"), resourcesMain.resolve("input"))
     // copy test input
     template.resolve("src/test/resources").toFile().copyRecursively(resourcesTest.toFile())
     // copy solution files in their own day package to make stacktraces easier
