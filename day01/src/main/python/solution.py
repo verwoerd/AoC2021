@@ -1,9 +1,5 @@
 def count_increments(sonar):
-    count = 0
-    for i in range(len(sonar) - 1):
-        if sonar[i + 1] > sonar[i]:
-            count = count + 1
-    return count
+    return sum([sonar[i + 1] > sonar[i] for i in range(len(sonar) - 1)])
 
 
 f = open('../resources/input', 'r')

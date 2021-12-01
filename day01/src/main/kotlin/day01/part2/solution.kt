@@ -9,8 +9,6 @@ import java.io.BufferedReader
 fun day01Part2(input: BufferedReader): Any {
   return input.lineSequence()
     .map { it.toLong() }
-    .windowed(3)
-    .map { (a, b, c) -> a + b + c }
-    .zipWithNext()
-    .count { (a, b) -> b > a }
+    .windowed(4)
+    .count { (a,_, _, b) -> b > a }
 }

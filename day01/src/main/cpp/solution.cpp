@@ -17,10 +17,10 @@ VLL readInputFile() {
     return lines;
 }
 
-int countDeeperLines(VLL sonar) {
+int countDeeperLines(VLL sonar, int diff) {
     int count = 0;
-    for(int i = 0; i < sonar.size() - 1; i++){
-        if(sonar[i+1] > sonar[i]) count++;
+    for(int i = 0; i < sonar.size() - diff; i++){
+        if(sonar[i+diff] > sonar[i]) count++;
     }
     return count;
 }
@@ -28,12 +28,8 @@ int countDeeperLines(VLL sonar) {
 int main() {
     VLL sonar = readInputFile();
     cout << "part 1" << endl;
-    cout << countDeeperLines(sonar) << endl;
+    cout << countDeeperLines(sonar, 1) << endl;
     cout << "part 2" << endl;
-    VLL windowed;
-    for(int i=0;  i < sonar.size() - 2; i++) {
-        windowed.push_back(sonar[i]+sonar[i+1]+sonar[i+2]);
-    }
-    cout << countDeeperLines(windowed) << endl;
+    cout << countDeeperLines(sonar, 3) << endl;
     return 0;
 }
