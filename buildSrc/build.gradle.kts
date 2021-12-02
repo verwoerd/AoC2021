@@ -1,8 +1,13 @@
 plugins {
- `kotlin-dsl`
+  `kotlin-dsl`
 }
 
 repositories {
-  jcenter()
+  gradlePluginPortal()
   mavenCentral()
 }
+
+dependencies {
+  implementation("com.pswidersk:python-gradle-plugin:1.3.0")
+}
+

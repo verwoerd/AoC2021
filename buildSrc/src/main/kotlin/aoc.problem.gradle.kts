@@ -1,5 +1,6 @@
 plugins {
   id("aoc.kotlin")
+  id("aoc.python")
   application
 }
 
