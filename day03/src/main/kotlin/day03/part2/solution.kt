@@ -15,7 +15,7 @@ fun day03Part2(input: BufferedReader): Any {
   var index = max
   while (oxygenSet.size > 1) {
     val ones = oxygenSet.filter { (it shr index) and 1 == 1L }.toSet()
-    oxygenSet = when (2*ones.size >= oxygenSet.size ) {
+    oxygenSet = when (2 * ones.size >= oxygenSet.size) {
       true -> ones
       else -> oxygenSet - ones
     }
@@ -24,8 +24,8 @@ fun day03Part2(input: BufferedReader): Any {
   var co2Set = lines.toSet()
   index = max
   while (co2Set.size > 1) {
-    val ones = co2Set.filter { (it shr index) and 1  == 1L }.toSet()
-    co2Set = when (2*ones.size >= co2Set.size) {
+    val ones = co2Set.filter { (it shr index) and 1 == 1L }.toSet()
+    co2Set = when (2 * ones.size >= co2Set.size) {
       true -> co2Set - ones
       else -> ones
     }
