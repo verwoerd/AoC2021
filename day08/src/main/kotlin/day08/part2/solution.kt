@@ -25,20 +25,20 @@ data class Digit(
 ) {
   companion object {
     fun decode(list: List<String>): Digit {
-      val one = list.first { it.length == 2 }
-      val seven = list.first { it.length == 3 }
-      val four = list.first { it.length == 4 }
-      val eight = list.first { it.length == 7 }
+      val sizeCache = list.groupBy { it.length }
+      val one = sizeCache[2]!!.first()
+      val seven = sizeCache[3]!!.first()
+      val four = sizeCache[4]!!.first()
+      val eight = sizeCache[7]!!.first()
       var digit = Digit(top = seven.first { it !in one })
-      val six = list.filter { it.length == 6 }.first { d -> d.filter { it !in one }.length == 5 }
-      val nine = list.filter { it.length == 6 }.first { d -> four.all { it in d } }
+      val six = sizeCache[6]!!.first { d -> d.filter { it !in one }.length == 5 }
+      val nine = sizeCache[6]!!.first { d -> four.all { it in d } }
+      val zero = sizeCache[6]!!.first { it != six && it != nine }
       digit = digit.copy(topRight = eight.first { it !in six },
         bottomLeft = eight.first { it !in nine },
         bottomRight = one.first { it != digit.topRight },
-        bottom = nine.first { it !in four && it != digit.top })
-      val zero = list.first { it.length == 6 && it != six && it != nine }
-      digit =
-        digit.copy(topLeft = zero.first { it != digit.top && it != digit.bottom && it != digit.topRight && it != digit.bottomRight && it != digit.bottomLeft })
+        bottom = nine.first { it !in four && it != digit.top },
+        topLeft = zero.first { it != digit.top && it != digit.bottom && it != digit.topRight && it != digit.bottomRight && it != digit.bottomLeft })
       return digit.copy(middle = four.first { it != digit.topLeft && it != digit.topRight && it != digit.bottomRight })
     }
   }
