@@ -8,10 +8,10 @@ import java.io.BufferedReader
  */
 fun day08Part2(input: BufferedReader): Any {
   return input.lineSequence().map { line ->
-      line.split("|").let { (code, result) ->
-        code.split(" ").filter { it.isNotBlank() } to result.split(" ").filter { it.isNotBlank() }
-      }
-    }.sumOf { (description, numbers) -> Digit.decode(description).parseSequence(numbers) }
+    line.split("|").let { (code, result) ->
+      code.split(" ").filter { it.isNotBlank() } to result.split(" ").filter { it.isNotBlank() }
+    }
+  }.sumOf { (description, numbers) -> Digit.decode(description).parseSequence(numbers) }
 }
 
 data class Digit(
@@ -30,15 +30,13 @@ data class Digit(
       val seven = sizeCache[3]!!.first()
       val four = sizeCache[4]!!.first()
       val eight = sizeCache[7]!!.first()
-      var digit = Digit(top = seven.first { it !in one })
       val six = sizeCache[6]!!.first { d -> d.filter { it !in one }.length == 5 }
       val nine = sizeCache[6]!!.first { d -> four.all { it in d } }
       val zero = sizeCache[6]!!.first { it != six && it != nine }
-      digit = digit.copy(topRight = eight.first { it !in six },
-        bottomLeft = eight.first { it !in nine },
-        bottomRight = one.first { it != digit.topRight },
-        bottom = nine.first { it !in four && it != digit.top },
-        topLeft = zero.first { it != digit.top && it != digit.bottom && it != digit.topRight && it != digit.bottomRight && it != digit.bottomLeft })
+      var digit = Digit(top = seven.first { it !in one })
+      digit = digit.copy(topRight = eight.first { it !in six }, bottomLeft = eight.first { it !in nine }, bottom = nine.first { it !in four && it != digit.top })
+      digit = digit.copy(bottomRight = one.first { it != digit.topRight })
+      digit = digit.copy(topLeft = zero.first { it != digit.top && it != digit.bottom && it != digit.topRight && it != digit.bottomRight && it != digit.bottomLeft })
       return digit.copy(middle = four.first { it != digit.topLeft && it != digit.topRight && it != digit.bottomRight })
     }
   }
@@ -52,9 +50,9 @@ data class Digit(
       3 -> 7
       4 -> 4
       5 -> when {
-        topLeft in number && bottomRight in number -> 5
-        topRight in number && bottomRight in number -> 3
-        topRight in number && bottomLeft in number -> 2
+        bottomRight !in number -> 2
+        topLeft !in number -> 3
+        topRight !in number -> 5
         else -> error("invalid digit $number")
       }
       6 -> when {
