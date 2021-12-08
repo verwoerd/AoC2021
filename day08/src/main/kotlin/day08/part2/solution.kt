@@ -7,13 +7,11 @@ import java.io.BufferedReader
  * @since 08/12/21
  */
 fun day08Part2(input: BufferedReader): Any {
-  return input.lineSequence()
-    .map { line ->
+  return input.lineSequence().map { line ->
       line.split("|").let { (code, result) ->
         code.split(" ").filter { it.isNotBlank() } to result.split(" ").filter { it.isNotBlank() }
       }
-    }
-    .sumOf { (description, numbers) -> Digit.decode(description).parseSequence(numbers) }
+    }.sumOf { (description, numbers) -> Digit.decode(description).parseSequence(numbers) }
 }
 
 data class Digit(
@@ -34,25 +32,18 @@ data class Digit(
       var digit = Digit(top = seven.first { it !in one })
       val six = list.filter { it.length == 6 }.first { d -> d.filter { it !in one }.length == 5 }
       val nine = list.filter { it.length == 6 }.first { d -> four.all { it in d } }
-      digit = digit.copy(topRight = eight.first { it !in six }, bottomLeft = eight.first { it !in nine })
-      digit = digit.copy(bottomRight = one.first { it != digit.topRight })
-      // middle bottom topLeft  bottomRight
-      digit = digit.copy(bottom = nine.first { it !in four && it != digit.top })
+      digit = digit.copy(topRight = eight.first { it !in six },
+        bottomLeft = eight.first { it !in nine },
+        bottomRight = one.first { it != digit.topRight },
+        bottom = nine.first { it !in four && it != digit.top })
       val zero = list.first { it.length == 6 && it != six && it != nine }
       digit =
-        digit.copy(topLeft = zero.first {
-          it != digit.top
-              && it != digit.bottom
-              && it != digit.topRight
-              && it != digit.bottomRight
-              && it != digit.bottomLeft
-        })
+        digit.copy(topLeft = zero.first { it != digit.top && it != digit.bottom && it != digit.topRight && it != digit.bottomRight && it != digit.bottomLeft })
       return digit.copy(middle = four.first { it != digit.topLeft && it != digit.topRight && it != digit.bottomRight })
     }
   }
 
-  fun parseSequence(numbers: List<CharSequence>) =
-    numbers.fold(0) { acc, i -> acc * 10 + parseNumber(i) }
+  fun parseSequence(numbers: List<CharSequence>) = numbers.fold(0) { acc, i -> acc * 10 + parseNumber(i) }
 
 
   private fun parseNumber(number: CharSequence): Int {
