@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -5,7 +6,6 @@
 #include <set>
 #include <string>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 
@@ -86,18 +86,20 @@ int calculateBasins(map<coordinate, int> heightMap) {
     }
     basinSize.push_back(seen.size());
   }
-    sort(basinSize.begin(), basinSize.end());
-    int result = 1;
-    for(auto current = basinSize.rbegin(); current != basinSize.rbegin()+3; ++current) {
-        result *= *current;
-    }
-    return result;
+  sort(basinSize.begin(), basinSize.end());
+  int result = 1;
+  for (auto current = basinSize.rbegin(); current != basinSize.rbegin() + 3;
+       ++current) {
+    result *= *current;
+  }
+  return result;
 }
 
 int main() {
   auto depthMap = readInputFile();
-  cout << "part 1" << endl << calculteLowPoints(depthMap) << endl
-     << "part 2" << endl
-     << calculateBasins(depthMap) << endl;
+  cout << "part 1" << endl
+       << calculteLowPoints(depthMap) << endl
+       << "part 2" << endl
+       << calculateBasins(depthMap) << endl;
   return 0;
 }
