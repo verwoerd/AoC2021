@@ -69,32 +69,34 @@ map<coordinate, int> doRound(map<coordinate, int> &initialState) {
 }
 
 int part1(map<coordinate, int> &initial_state) {
-    int count = 0;
-    map<coordinate, int> state = initial_state;
-    for(int i=0; i <= 100; i++) {
-        state = doRound(state);
-        for(auto const &pair: state) {
-            if(pair.second == 0) {count++;}
-        }
+  int count = 0;
+  map<coordinate, int> state = initial_state;
+  for (int i = 0; i <= 100; i++) {
+    state = doRound(state);
+    for (auto const &pair : state) {
+      if (pair.second == 0) {
+        count++;
+      }
     }
-    return count;
+  }
+  return count;
 }
 
 int part2(map<coordinate, int> &initial_state) {
-    int count = 1;
-    map<coordinate, int> state = initial_state;
-    while(true) {
-        state = doRound(state);
-        bool synced = true;
-        for(auto const &pair: state) {
-            synced &= pair.second == 0;
-        }
-        if(synced){return count;}
-        ++count;
+  int count = 1;
+  map<coordinate, int> state = initial_state;
+  while (true) {
+    state = doRound(state);
+    bool synced = true;
+    for (auto const &pair : state) {
+      synced &= pair.second == 0;
     }
+    if (synced) {
+      return count;
+    }
+    ++count;
+  }
 }
-
-
 
 int main() {
   auto octopusGarden = readInputFile();
