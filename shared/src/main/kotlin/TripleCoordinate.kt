@@ -11,6 +11,7 @@ import kotlin.math.abs
  * @since 25-11-21
  */
 data class TripleCoordinate(val x: Long, val y: Long, val z: Long) {
+  constructor(xVal: Int, yVal: Int, zVal: Int) : this(xVal.toLong(), yVal.toLong(), zVal.toLong())
   operator fun minus(other: TripleCoordinate) = TripleCoordinate(x - other.x, y - other.y, z - other.z)
   operator fun plus(other: TripleCoordinate) = TripleCoordinate(x + other.x, y + other.y, z + other.z)
   operator fun plus(i: Number) = plus(TripleCoordinate(i.toLong(), i.toLong(), i.toLong()))
